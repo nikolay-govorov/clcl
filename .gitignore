@@ -1,0 +1,6 @@
+**/*.out
+**/*.o
+
+# compiled exe
+/calculator
+
