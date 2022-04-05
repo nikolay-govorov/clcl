@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -ansi -pedantic
 
-SRCMODULES = log.c
+SRCMODULES = log.c calc.c
 OBJMODULES = $(SRCMODULES:.c=.o)
 EXECUTABLE = calculator
 
