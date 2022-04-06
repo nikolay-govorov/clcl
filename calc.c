@@ -17,7 +17,8 @@ struct list {
 };
 typedef struct list list_t;
 
-void list_append(list_t *list, char *value) {
+void list_append(list_t *list, char *value)
+{
   list_node_t *item = malloc(sizeof(list_node_t));
   strcpy(item->value, value);
   item->next = NULL;
@@ -30,7 +31,8 @@ void list_append(list_t *list, char *value) {
   }
 }
 
-void list_print(list_t *list) {
+void list_print(list_t *list)
+{
   list_node_t *ptr = list->head;
 
   for (; ptr; ptr = ptr->next) {
@@ -48,23 +50,19 @@ void calc(const char *expression, double *result, int *error)
   head->tail = NULL;
 
   /* 1. Parse on tokens */
-  for (cur = expression; *cur; cur++)
-  {
+  for (cur = expression; *cur; cur++) {
     char token[TOKEN_MAX_SIZE] = { 0 };
 
     /* skip space */
-    if (*cur == ' ' || *cur == '\n' || *cur == '\t')
-    {
+    if (*cur == ' ' || *cur == '\n' || *cur == '\t') {
       continue;
     }
 
     /* 1-9 */
-    if ((*cur >= '0' && *cur <= '9') || *cur == '.')
-    {
+    if ((*cur >= '0' && *cur <= '9') || *cur == '.') {
       int size = 0;
 
-      while (*cur && ((*cur >= '0' && *cur <= '9') || *cur == '.'))
-      {
+      while (*cur && ((*cur >= '0' && *cur <= '9') || *cur == '.')) {
         if (size >= (TOKEN_MAX_SIZE - 1)) {
           *error = 1;
           *result = 0;
@@ -89,8 +87,7 @@ void calc(const char *expression, double *result, int *error)
       *cur == '(' || *cur == ')' ||
       *cur == '+' || *cur == '-' ||
       *cur == '*' || *cur == '/' || *cur == '^'
-    )
-    {
+    ) {
       token[0] = *cur;
       token[1] = '\0';
 

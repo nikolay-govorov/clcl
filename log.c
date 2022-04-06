@@ -1,14 +1,15 @@
 #include <stdio.h>
 
 #include "log.h"
-
-const char prefix_info[] = "INFO";
-const char prefix_error[] = "ERROR";
+#include "locale.h"
 
 void calc_log(LogLevel_t level, char *message)
 {
   FILE *stream;
   const char *prefix;
+
+  char *prefix_info = _("INFO");
+  char *prefix_error = _("ERROR");
 
   switch (level)
   {

@@ -2,5 +2,7 @@
 **/*.o
 
 # compiled exe
+*.pot
+/ru
 /calculator
 
