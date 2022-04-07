@@ -2,12 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define TOKEN_MAX_SIZE 255
-
-typedef char* list_value;
+/* generic linked list */
 
 struct list_node {
-  char value[TOKEN_MAX_SIZE];
+  void* value;
   struct list_node *next;
 };
 typedef struct list_node list_node_t;
@@ -17,10 +15,10 @@ struct list {
 };
 typedef struct list list_t;
 
-void list_append(list_t *list, char *value)
+void list_append(list_t *list, void *value)
 {
   list_node_t *item = malloc(sizeof(list_node_t));
-  strcpy(item->value, value);
+  item->value = value;
   item->next = NULL;
 
   if (list->head == NULL) {
@@ -31,13 +29,37 @@ void list_append(list_t *list, char *value)
   }
 }
 
-void list_print(list_t *list)
+void list_traverse(list_t *list, void (*callback)(list_node_t*))
 {
   list_node_t *ptr = list->head;
 
   for (; ptr; ptr = ptr->next) {
-    printf("-> %s\n", ptr->value);
+    callback(ptr);
   }
+}
+
+void list_free(list_t *list)
+{
+  list_node_t *cur = list->head, *tmp;
+
+  while (cur) {
+    tmp = cur;
+    cur = cur->next;
+
+    free(tmp->value);
+    free(tmp);
+  }
+
+  list->head = NULL;
+  list->tail = NULL;
+}
+
+/* calc specific modules */
+enum { token_max_size = 255 };
+
+void print_token_list_item(list_node_t *node)
+{
+    printf("-> %s\n", (char*)node->value);
 }
 
 void calc(const char *expression, double *result, int *error)
@@ -51,7 +73,8 @@ void calc(const char *expression, double *result, int *error)
 
   /* 1. Parse on tokens */
   for (cur = expression; *cur; cur++) {
-    char token[TOKEN_MAX_SIZE] = { 0 };
+    char *str;
+    char token[token_max_size] = { 0 };
 
     /* skip space */
     if (*cur == ' ' || *cur == '\n' || *cur == '\t') {
@@ -63,7 +86,7 @@ void calc(const char *expression, double *result, int *error)
       int size = 0;
 
       while (*cur && ((*cur >= '0' && *cur <= '9') || *cur == '.')) {
-        if (size >= (TOKEN_MAX_SIZE - 1)) {
+        if (size >= (token_max_size - 1)) {
           *error = 1;
           *result = 0;
 
@@ -78,29 +101,43 @@ void calc(const char *expression, double *result, int *error)
       }
       cur--;
 
-      list_append(head, token);
+      str = malloc(sizeof(char) * size + 1);
+      strcpy(str, token);
+
+      list_append(head, str);
 
       continue;
     }
 
+    /* brackets and signs of arithmetic operations */
     if (
       *cur == '(' || *cur == ')' ||
       *cur == '+' || *cur == '-' ||
       *cur == '*' || *cur == '/' || *cur == '^'
     ) {
-      token[0] = *cur;
-      token[1] = '\0';
+      str = malloc(sizeof(char) + 1);
 
-      list_append(head, token);
+      str[0] = *cur;
+      str[1] = '\0';
+
+      list_append(head, str);
 
       continue;
     }
+
+    /* Unknown symbol */
+    *error = 1;
+    *result = 0;
+
+    return;
   }
 
   /* 2. Convert to RPN */
   /* 3. Calc */
 
-  list_print(head);
+  list_traverse(head, &print_token_list_item);
+
+  list_free(head);
 
   *error = 0;
   *result = 1.0;
