@@ -12,7 +12,7 @@ int main(int argc, char **argv)
   setup_locale();
 
   if (argc != 2) {
-    calc_log(Error, _("required one arg with arithmetic expression"));
+    calc_log(Error, _("one argument is required and must be an arithmetic expression"));
     return 1;
   }
 

@@ -1,6 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -ansi -pedantic
 
+LANG = ru de kz
 SRCMODULES = log.c calc.c locale.c
 OBJMODULES = $(SRCMODULES:.c=.o)
 EXECUTABLE = calculator
@@ -15,10 +16,9 @@ $(EXECUTABLE): $(OBJMODULES) main.c
 
 .PHONY: clear
 clear:
-	rm -rvf $(EXECUTABLE) ru/ *.o *.out
+	rm -rvf $(EXECUTABLE) */LC_MESSAGES/$(EXECUTABLE).mo *.o *.out
 
 .PHONY: translate
 translate:
-	mkdir -p ru/LC_MESSAGES/
-	msgfmt translate/ru.pot -o ru/LC_MESSAGES/$(EXECUTABLE).mo
+	for dir in $(LANG); do msgfmt $$dir/LC_MESSAGES/$(EXECUTABLE).pot -o $$dir/LC_MESSAGES/$(EXECUTABLE).mo; done
 

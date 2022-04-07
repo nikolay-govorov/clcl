@@ -2,7 +2,6 @@
 **/*.o
 
 # compiled exe
-*.pot
-/ru
+*/LC_MESSAGES/*.mo
 /calculator
 
