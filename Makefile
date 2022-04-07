@@ -2,7 +2,9 @@ CC = gcc
 CFLAGS = -Wall -ansi -pedantic
 
 LANG = ru de kz
-SRCMODULES = log.c calc.c locale.c
+
+# all .c files (by headers) except main.c
+SRCMODULES = $(patsubst %.h,%.c,$(wildcard *.h))
 OBJMODULES = $(SRCMODULES:.c=.o)
 EXECUTABLE = calculator
 
@@ -14,8 +16,8 @@ $(EXECUTABLE): $(OBJMODULES) main.c
 %.o: %.c %.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-.PHONY: clear
-clear:
+.PHONY: clean
+clean:
 	rm -rvf $(EXECUTABLE) */LC_MESSAGES/$(EXECUTABLE).mo *.o *.out
 
 .PHONY: translate
