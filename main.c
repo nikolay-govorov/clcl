@@ -16,10 +16,22 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  calc(argv[1], &result, &error);
+  error = calc(argv[1], &result);
+  if (error != 0) {
+    switch(error) {
+      case error_parse:
+        calc_log(Error, _("invalid expression"));
+        break;
 
-  if (error) {
-    calc_log(Error, _("invalid expression"));
+      case error_convert:
+        calc_log(Error, _("invalid expression"));
+        break;
+
+      case error_eval:
+        calc_log(Error, _("invalid expression"));
+        break;
+    }
+
     return 2;
   }
 

@@ -4,7 +4,7 @@ CFLAGS = -Wall -ansi -pedantic
 LANG = ru de kz
 
 # all .c files (by headers) except main.c
-SRCMODULES = $(patsubst %.h,%.c,$(wildcard *.h))
+SRCMODULES = $(patsubst %.h,%.c,$(wildcard *.h **/*.h))
 OBJMODULES = $(SRCMODULES:.c=.o)
 EXECUTABLE = calculator
 
