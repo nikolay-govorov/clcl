@@ -6,7 +6,7 @@ LANG = ru de kz
 # all .c files (by headers) except main.c
 SRCMODULES = $(patsubst %.h,%.c,$(wildcard *.h **/*.h))
 OBJMODULES = $(SRCMODULES:.c=.o)
-EXECUTABLE = calculator
+EXECUTABLE = clcl
 
 build: $(EXECUTABLE) translate
 
@@ -18,7 +18,7 @@ $(EXECUTABLE): $(OBJMODULES) main.c
 
 .PHONY: clean
 clean:
-	rm -rvf $(EXECUTABLE) */LC_MESSAGES/$(EXECUTABLE).mo *.o *.out
+	rm -rvf $(EXECUTABLE) */LC_MESSAGES/$(EXECUTABLE).mo **/*.o **/*.out
 
 .PHONY: translate
 translate:

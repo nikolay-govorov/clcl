@@ -5,7 +5,7 @@
 #include "locale.h"
 
 #define LOCALEBASEDIR "."
-#define TEXTDOMAIN "calculator"
+#define TEXTDOMAIN "clcl"
 
 void setup_locale()
 {

@@ -6,27 +6,25 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calculator\n"
-"POT-Creation-Date: 2022-04-06 23:49+0400\n"
+"Project-Id-Version: clcl\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-04-10 03:49+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Nikolay G.\n"
-"Language: kz\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: log.c:11
-msgid "INFO"
-msgstr "АҚПАРАТ"
-
-#: log.c:12
+#: main.c:8
 msgid "ERROR"
-msgstr "АҚПАРАТ"
+msgstr "ОШИБКА"
 
-#: main.c:15
+#: main.c:19
 msgid "one argument is required and must be an arithmetic expression"
-msgstr "бір аргумент қажет және ол арифметикалық өрнек болуы керек"
+msgstr "требуется один аргумент — арифметическое выражение"
 
-#: main.c:22
+#: main.c:27 main.c:31 main.c:35
 msgid "invalid expression"
-msgstr "жарамсыз өрнек"
+msgstr "невалидное выражение"
+

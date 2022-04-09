@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calculator\n"
+"Project-Id-Version: clcl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-07 15:29+0400\n"
+"POT-Creation-Date: 2022-04-10 03:49+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Nikolay G.\n"
 "Language: de\n"
@@ -16,18 +16,16 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: log.c:11
-msgid "INFO"
-msgstr "INFO"
-
-#: log.c:12
+#: main.c:8
 msgid "ERROR"
 msgstr "FEHLER"
 
-#: main.c:15
+#: main.c:19
 msgid "one argument is required and must be an arithmetic expression"
-msgstr "Ein Argument ist erforderlich und muss ein arithmetischer Ausdruck sein"
+msgstr ""
+"Ein Argument ist erforderlich und muss ein arithmetischer Ausdruck sein"
 
-#: main.c:22
+#: main.c:27 main.c:31 main.c:35
 msgid "invalid expression"
 msgstr "ungültiger Ausdruck"
+
