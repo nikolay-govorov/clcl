@@ -35,7 +35,7 @@ int main(int argc, char **argv)
     return 2;
   }
 
-  printf("%s = %f\n", argv[1], result);
+  printf("%f\n", result);
 
   return 0;
 }

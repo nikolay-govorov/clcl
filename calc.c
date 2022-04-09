@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -197,46 +198,77 @@ int tokens_to_rpn(const list_t *tokens, list_t *rpn)
 }
 
 /* 3. Evaluate expression */
-int eval_rpn()
+int eval_rpn(list_t *rpn, double *result)
 {
+  list_node_t *ptr;
+  stack_t *st = stack_create();
+
+  for(ptr = rpn->head; ptr != NULL; ptr = ptr->next) {
+    expr_token_t *payload = ptr->payload, *token;
+
+    if (payload->type == operation) {
+      double result, a_value, b_value;
+      expr_token_t *a, *b;
+
+      if (stack_size(st) < 2) {
+        return 1;
+      }
+
+      a = stack_pop(st);
+      b = stack_pop(st);
+
+      if (a->type != number || b->type != number) {
+        return 1;
+      }
+
+      a_value = a->data.number;
+      b_value = b->data.number;
+
+      switch (payload->data.operation) {
+        case '^':
+          result = pow(b_value, a_value);
+          break;
+
+        case '*':
+          result = b_value * a_value;
+          break;
+
+        case '/':
+          result = b_value / a_value;
+          break;
+
+        case '+':
+          result = b_value + a_value;
+          break;
+
+        case '-':
+          result = b_value - a_value;
+          break;
+      }
+
+      token = malloc(sizeof(expr_token_t));
+      token->type = number;
+      token->data.number = result;
+
+      stack_push(st, token);
+    }
+
+    if (payload->type == number) {
+      token = malloc(sizeof(expr_token_t));
+      token->type = number;
+      token->data.number = payload->data.number;
+
+      stack_push(st, token);
+    }
+  }
+
+  if (stack_size(st) != 1) {
+    return 1;
+  }
+
+  *result = ((expr_token_t*)stack_pop(st))->data.number;
+
   return 0;
-}
-
-/* utils */
-void print_token(const list_node_t *node)
-{
-  expr_token_t *token = node->payload;
-  switch (token->type) {
-    case number:
-      printf("'[%i] %g' ", token->type, token->data.number);
-      break;
-
-    case bracket:
-      printf("'[%i] %c' ", token->type, token->data.bracket);
-      break;
-
-    case operation:
-      printf("'[%i] %c' ", token->type, token->data.operation);
-      break;
-  }
-}
-
-void print_rpn(const list_node_t *node)
-{
-  expr_token_t *token = node->payload;
-  switch (token->type) {
-    case number:
-      printf("%g ", token->data.number);
-      break;
-
-    case bracket:
-      printf("%c ", token->data.bracket);
-      break;
-
-    case operation:
-      printf("%c ", token->data.operation);
-      break;
-  }
 }
 
 int calc(const char *expression, double *result)
@@ -253,10 +285,6 @@ int calc(const char *expression, double *result)
     return error_parse;
   }
 
-  printf("\nTokens: \n\t");
-  list_traverse(expr_list, &print_token);
-  printf("\n");
-
   /*********************************************************/
   /* Convert infix notation to RPN */
   step_error = tokens_to_rpn(expr_list, rpn_list);
@@ -264,13 +292,9 @@ int calc(const char *expression, double *result)
     return error_convert;
   }
 
-  printf("\nRPN: \n\t");
-  list_traverse(rpn_list, &print_rpn);
-  printf("\n");
-
   /*********************************************************/
   /* Eval RPN to result */
-  step_error = eval_rpn();
+  step_error = eval_rpn(rpn_list, result);
   if (step_error != 0) {
     return error_eval;
   }
@@ -279,7 +303,6 @@ int calc(const char *expression, double *result)
   list_free(expr_list);
   list_free(rpn_list);
 
-  *result = 1.0;
   return 0;
 }
 
