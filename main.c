@@ -1,8 +1,12 @@
 #include <stdio.h>
 
 #include "locale.h"
-#include "log.h"
 #include "calc.h"
+
+void log_error(const char *message)
+{
+  fprintf(stderr, "[%s]: %s\n", _("ERROR"), message);
+}
 
 int main(int argc, char **argv)
 {
@@ -12,7 +16,7 @@ int main(int argc, char **argv)
   setup_locale();
 
   if (argc != 2) {
-    calc_log(Error, _("one argument is required and must be an arithmetic expression"));
+    log_error(_("one argument is required and must be an arithmetic expression"));
     return 1;
   }
 
@@ -20,22 +24,22 @@ int main(int argc, char **argv)
   if (error != 0) {
     switch(error) {
       case error_parse:
-        calc_log(Error, _("invalid expression"));
+        log_error(_("invalid expression"));
         break;
 
       case error_convert:
-        calc_log(Error, _("invalid expression"));
+        log_error(_("invalid expression"));
         break;
 
       case error_eval:
-        calc_log(Error, _("invalid expression"));
+        log_error(_("invalid expression"));
         break;
     }
 
     return 2;
   }
 
-  printf("%f\n", result);
+  printf("%g\n", result);
 
   return 0;
 }
