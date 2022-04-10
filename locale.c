@@ -4,7 +4,10 @@
 
 #include "locale.h"
 
+#ifndef LOCALE_BASE_DIR
 #define LOCALE_BASE_DIR "."
+#endif
+
 #define TEXT_DOMAIN "clcl"
 
 void setup_locale()

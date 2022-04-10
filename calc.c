@@ -244,6 +244,9 @@ int eval_rpn(list_t *rpn, double *result)
         case '-':
           result = b_value - a_value;
           break;
+
+        default:
+          return 1;
       }
 
       token = malloc(sizeof(expr_token_t));

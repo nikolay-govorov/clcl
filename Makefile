@@ -6,34 +6,44 @@ LANG = ru de kz
 INSTALL_DIR = /usr/bin
 LOCALE_BASE_DIR = /usr/share/locale
 
-CFLAGS += -DLOCALE_BASE_DIR=$(LOCALE_BASE_DIR)
+CFLAGS += -DLOCALE_BASE_DIR='"$(LOCALE_BASE_DIR)"'
 
-# all .c files (by headers) except main.c
-SRCMODULES = $(patsubst %.h,%.c,$(wildcard *.h **/*.h))
+SRCMODULES = $(wildcard *.c **/*.c)
 OBJMODULES = $(SRCMODULES:.c=.o)
+TRANSLATES = $(patsubst %.pot,%.mo,$(wildcard */LC_MESSAGES/*.pot))
 EXECUTABLE = clcl
 
 build: $(EXECUTABLE) translate
 
-$(EXECUTABLE): $(OBJMODULES) main.c
+$(EXECUTABLE): $(OBJMODULES)
 	$(CC) $(CFLAGS) $(CLIBS) $^ -o $@
 
+main.o: main.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
 %.o: %.c %.h
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 .PHONY: clean
 clean:
-	rm -rvf $(EXECUTABLE) */LC_MESSAGES/$(EXECUTABLE).mo **/*.o **/*.out
+	rm -rvf $(EXECUTABLE) $(TRANSLATES) $(OBJMODULES) {**/,}*.out
 
 .PHONY: translate
-translate:
-	for dir in $(LANG); do msgfmt $$dir/LC_MESSAGES/$(EXECUTABLE).pot -o $$dir/LC_MESSAGES/$(EXECUTABLE).mo; done
+translate: $(TRANSLATES)
+
+%.mo: %.pot
+	msgfmt $< -o $@
 
 .PHONY: install
-install:
-	install $(EXECUTABLE) /usr/bin
+install: build
+	install $(EXECUTABLE) $(INSTALL_DIR)
 	for code in $(LANG); do \
 		mkdir -p $(LOCALE_BASE_DIR)/$$code/LC_MESSAGES/; \
 		cp -r $$code/LC_MESSAGES/*.mo $(LOCALE_BASE_DIR)/$$code/LC_MESSAGES/; \
 	done
+
+.PHONY: uninstall
+uninstall:
+	rm -rvf $(INSTALL_DIR)/$(EXECUTABLE)
+	rm -rvf $(LOCALE_BASE_DIR)/*/LC_MESSAGES/$(EXECUTABLE).mo
 
