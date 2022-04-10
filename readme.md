@@ -15,16 +15,18 @@ $ ./clcl '(1 + 2) ^ 3 + 3 + 10'
 - `EN`, `DE`, `RU` and `KZ` languages support
 
 **Build:**
-Depends on `gcc` and `gnu make`.
+
+Depends on `gcc` (or `clang`) and `gnu make`.
 
 ```bash
 # Close the repo
 $ git clone https://github.com/nikolay-govorov/clcl.git
 
-# Build the app with GCC
+# Build and install
 $ make build
+$ sudo make install
 
 # Use the clcl!
-$ ./clcl '1 + 3'
+$ clcl '1 + 3'
 ```
 

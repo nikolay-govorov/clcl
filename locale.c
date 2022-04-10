@@ -4,14 +4,14 @@
 
 #include "locale.h"
 
-#define LOCALEBASEDIR "."
-#define TEXTDOMAIN "clcl"
+#define LOCALE_BASE_DIR "."
+#define TEXT_DOMAIN "clcl"
 
 void setup_locale()
 {
   setlocale(LC_CTYPE, "");
   setlocale(LC_MESSAGES, "");
-  bindtextdomain(TEXTDOMAIN, LOCALEBASEDIR);
-  textdomain(TEXTDOMAIN);
+  bindtextdomain(TEXT_DOMAIN, LOCALE_BASE_DIR);
+  textdomain(TEXT_DOMAIN);
 }
 
