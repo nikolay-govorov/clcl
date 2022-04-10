@@ -1,5 +1,5 @@
-CC = gcc
-CFLAGS = -Wall -ansi -pedantic -lm
+CFLAGS = -Wall -ansi -pedantic -O2
+CLIBS = -lm
 
 LANG = ru de kz
 
@@ -16,7 +16,7 @@ EXECUTABLE = clcl
 build: $(EXECUTABLE) translate
 
 $(EXECUTABLE): $(OBJMODULES) main.c
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $(CLIBS) $^ -o $@
 
 %.o: %.c %.h
 	$(CC) $(CFLAGS) -c $< -o $@
