@@ -10,11 +10,11 @@
 
 #define TEXT_DOMAIN "clcl"
 
-void setup_locale()
+void setup_locale(int is_relative)
 {
   setlocale(LC_CTYPE, "");
   setlocale(LC_MESSAGES, "");
-  bindtextdomain(TEXT_DOMAIN, LOCALE_BASE_DIR);
+  bindtextdomain(TEXT_DOMAIN, is_relative ? "." : LOCALE_BASE_DIR);
   textdomain(TEXT_DOMAIN);
 }
 

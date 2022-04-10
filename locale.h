@@ -6,7 +6,7 @@
 #define _(STR) gettext(STR)
 #define N_(STR) (STR)
 
-void setup_locale();
+void setup_locale(int);
 
 #endif
 
