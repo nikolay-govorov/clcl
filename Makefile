@@ -1,5 +1,5 @@
 CFLAGS = -Wall -ansi -pedantic
-LDFLAGS = -lm
+LDFLAGS += -lm
 
 LANG = ru de kz
 
@@ -15,7 +15,7 @@ EXECUTABLE = clcl
 
 all: release
 
-release: CFLAGS += -O2
+release: CFLAGS += -O2 -Wextra -Werror
 release: $(EXECUTABLE) translate
 
 debug: CFLAGS += -DDEBUG -g -O0
