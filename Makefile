@@ -8,7 +8,7 @@ LOCALE_BASE_DIR = /usr/share/locale
 
 CFLAGS += -DLOCALE_BASE_DIR='"$(LOCALE_BASE_DIR)"'
 
-SRCMODULES = $(wildcard *.c **/*.c)
+SRCMODULES = $(shell find 'src' -type f -name '*.c')
 OBJMODULES = $(SRCMODULES:.c=.o)
 TRANSLATES = $(patsubst %.pot,%.mo,$(wildcard */LC_MESSAGES/*.pot))
 EXECUTABLE = clcl
