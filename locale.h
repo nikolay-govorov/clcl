@@ -1,5 +1,5 @@
-#ifndef LOCALE_H_HEADER
-#define LOCALE_H_HEADER
+#ifndef _LOCALE_H_INCLUDED_
+#define _LOCALE_H_INCLUDED_
 
 #include <libintl.h>
 
@@ -8,5 +8,5 @@
 
 void setup_locale(int);
 
-#endif
+#endif /* _LOCALE_H_INCLUDED_ */
 

@@ -1,5 +1,5 @@
-#ifndef LIST_H
-#define LIST_H
+#ifndef _LIST_H_INCLUDED_
+#define _LIST_H_INCLUDED_
 
 struct list_node {
   void *payload;
@@ -19,5 +19,5 @@ void list_append(list_t*, void*);
 void list_traverse(list_t*, void (*callback)(const list_node_t*));
 void list_free(list_t*);
 
-#endif
+#endif /* _LIST_H_INCLUDED_ */
 

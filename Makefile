@@ -1,5 +1,5 @@
-CFLAGS = -Wall -ansi -pedantic -O2
-CLIBS = -lm
+CFLAGS = -Wall -ansi -pedantic
+LDFLAGS = -lm
 
 LANG = ru de kz
 
@@ -13,10 +13,16 @@ OBJMODULES = $(SRCMODULES:.c=.o)
 TRANSLATES = $(patsubst %.pot,%.mo,$(wildcard */LC_MESSAGES/*.pot))
 EXECUTABLE = clcl
 
-build: $(EXECUTABLE) translate
+all: release
+
+release: CFLAGS += -O2
+release: $(EXECUTABLE) translate
+
+debug: CFLAGS += -DDEBUG -g -O0
+debug: $(EXECUTABLE) translate
 
 $(EXECUTABLE): $(OBJMODULES)
-	$(CC) $(CFLAGS) $(CLIBS) $^ -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
 
 main.o: main.c
 	$(CC) $(CFLAGS) -c -o $@ $<

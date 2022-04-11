@@ -1,5 +1,5 @@
-#ifndef CALC_H
-#define CALC_H
+#ifndef _CALC_H_INCLUDED_
+#define _CALC_H_INCLUDED_
 
 enum {
   error_parse   = 1,
@@ -9,5 +9,5 @@ enum {
 
 int calc(const char*, double*);
 
-#endif
+#endif /* _CALC_H_INCLUDED_ */
 

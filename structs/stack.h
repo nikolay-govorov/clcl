@@ -1,5 +1,5 @@
-#ifndef STACK_H
-#define STACK_H
+#ifndef _STACK_H_INCLUDED_
+#define _STACK_H_INCLUDED_
 
 struct stack_node {
   void *payload;
@@ -13,12 +13,12 @@ struct stack {
 };
 typedef struct stack stack_t;
 
-stack_t *stack_create();
+stack_t* stack_create();
 
 unsigned int stack_size(stack_t*);
 void stack_push(stack_t*, void*);
-void *stack_get(stack_t*);
-void *stack_pop(stack_t*);
+void* stack_get(stack_t*);
+void* stack_pop(stack_t*);
 
-#endif
+#endif /* _STACK_H_INCLUDED_ */
 
